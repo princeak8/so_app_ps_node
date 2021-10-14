@@ -1,55 +1,39 @@
 var WebSocket = require('ws');
-const { transmissionData, generateValues } = require('../../utilities');
+const { powerData, generateValues } = require('../../utilities');
 
-const topic = 'jebbaTs/tr';
-const preparedData = () => {    
+const topic = 'jebba/pr';
+
+const preparedData = () => {
     return {
-        id: "jebbaTs",
-        lines: [
+        "id": "jebbaPs",
+        "units": [
             {
-                id: "k1j",
-                td: transmissionData(generateValues())
+                "id": "2g1",
+                "pd": powerData(generateValues())
             },
             {
-                id: "k2j",
-                td: transmissionData(generateValues())
+                "id": "2g2",
+                "pd": powerData(generateValues())
             },
             {
-                id: "j3r",
-                td: transmissionData(generateValues())
-            },
-
-
-            {
-                id: "j7r",
-                td: transmissionData(generateValues())
-            },
-
-
-            {
-                id: "b8j",
-                td: transmissionData(generateValues())
-            },
-            
-            {
-                id: "b9j",
-                td: transmissionData(generateValues())
+                "id": "2g3",
+                "pd": powerData(generateValues())
             },
             {
-                id: "j1h",
-                td: transmissionData(generateValues())
+                "id": "2g4",
+                "pd": powerData(generateValues())
             },
             {
-                id: "j2h",
-                td: transmissionData(generateValues())
+                "id": "2g5",
+                "pd": powerData(generateValues())
             },
             {
-                id: "j3g",
-                td: transmissionData(generateValues())
+                "id": "2g6",
+                "pd": powerData(generateValues())
             }
         ]
     }
-}
+};
 
 export const jebba = (wss, client) => {
     client.on('connect', function () {
@@ -72,16 +56,30 @@ export const jebba = (wss, client) => {
         console.log("failed to connect: "+error);
     })
 
-    client.on('message', async function (topic, message) {
+    client.on('message', async function (sentTopic, message) {
         //console.log('message from mqtt: ', message.toString());
         wss.clients.forEach((wsClient) => {
             //console.log('client ready');
-            if (wsClient.readyState === WebSocket.OPEN) {
+            if (wsClient.readyState === WebSocket.OPEN && sentTopic == topic) {
+                message = sanitizeData(message, sentTopic);
                 //wsData = [data];
-                //const vals = preparedData();
-                const vals = message.toString();
-                wsClient.send(message.toString());
+                //const vals = message.toString();
+                const vals = preparedData();
+                wsClient.send(vals);
             }
         });
     })
 };
+
+const sanitizeData = (message, topic) => {
+    if(topic == ncTopic) {
+        if(lastData == '') {
+            message = ncData;
+        }else{
+            lastData["nc"] = true;
+            message = lastData;
+        }
+    }else{
+        lastData = message;
+    }
+}

@@ -83,6 +83,6 @@ StationsController(wss, client);
 
 
 
-server.listen('3001', () => {
-    console.log('Server started on port 3001');
+server.listen('3002', () => {
+    console.log('Server started on port 3002');
 })

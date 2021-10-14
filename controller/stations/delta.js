@@ -1,49 +1,89 @@
 var WebSocket = require('ws');
 const { powerData, generateValues } = require('../../utilities');
 
-const topic = 'kainji/pr';
+const topic = 'delta/pr';
 
 const preparedData = () => {
     return {
-        "id": "kainjiPs",
+        "id": "deltaPs",
         "units": [
             {
-                "id": "1g5",
+                "id": "gt3",
                 "pd": powerData(generateValues())
             },
             {
-                "id": "1g6",
+                "id": "gt4",
                 "pd": powerData(generateValues())
             },
             {
-                "id": "1g7",
+                "id": "gt5",
                 "pd": powerData(generateValues())
             },
             {
-                "id": "1g8",
+                "id": "gt6",
                 "pd": powerData(generateValues())
             },
             {
-                "id": "1g9",
+                "id": "gt7",
                 "pd": powerData(generateValues())
             },
             {
-                "id": "1g10",
+                "id": "gt8",
                 "pd": powerData(generateValues())
             },
             {
-                "id": "1g11",
+                "id": "gt9",
                 "pd": powerData(generateValues())
             },
             {
-                "id": "1g12",
+                "id": "gt10",
+                "pd": powerData(generateValues())
+            },
+            {
+                "id": "gt11",
+                "pd": powerData(generateValues())
+            },
+            {
+                "id": "gt12",
+                "pd": powerData(generateValues())
+            },
+            {
+                "id": "gt13",
+                "pd": powerData(generateValues())
+            },
+            {
+                "id": "gt14",
+                "pd": powerData(generateValues())
+            },
+            {
+                "id": "gt15",
+                "pd": powerData(generateValues())
+            },
+            {
+                "id": "gt16",
+                "pd": powerData(generateValues())
+            },
+            {
+                "id": "gt17",
+                "pd": powerData(generateValues())
+            },
+            {
+                "id": "gt18",
+                "pd": powerData(generateValues())
+            },
+            {
+                "id": "gt19",
+                "pd": powerData(generateValues())
+            },
+            {
+                "id": "gt20",
                 "pd": powerData(generateValues())
             }
         ]
     }
 };
 
-export const kainji = (wss, client) => {
+export const delta = (wss, client) => {
     client.on('connect', function () {
         //subscribe to topic
 

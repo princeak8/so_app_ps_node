@@ -1,49 +1,61 @@
 var WebSocket = require('ws');
 const { powerData, generateValues } = require('../../utilities');
 
-const topic = 'kainji/pr';
+const topic = 'parasEnergy/pr';
 
 const preparedData = () => {
     return {
-        "id": "kainjiPs",
+        "id": "parasEnergyPs",
         "units": [
             {
-                "id": "1g5",
+                "id": "gt2",
                 "pd": powerData(generateValues())
             },
             {
-                "id": "1g6",
+                "id": "gt3",
                 "pd": powerData(generateValues())
             },
             {
-                "id": "1g7",
+                "id": "gt4",
                 "pd": powerData(generateValues())
             },
             {
-                "id": "1g8",
+                "id": "gt5",
                 "pd": powerData(generateValues())
             },
             {
-                "id": "1g9",
+                "id": "gt6",
                 "pd": powerData(generateValues())
             },
             {
-                "id": "1g10",
+                "id": "gt7",
                 "pd": powerData(generateValues())
             },
             {
-                "id": "1g11",
+                "id": "gt8",
                 "pd": powerData(generateValues())
             },
             {
-                "id": "1g12",
+                "id": "gt9",
+                "pd": powerData(generateValues())
+            },
+            {
+                "id": "gt10",
+                "pd": powerData(generateValues())
+            },
+            {
+                "id": "gt11",
+                "pd": powerData(generateValues())
+            },
+            {
+                "id": "gt12",
                 "pd": powerData(generateValues())
             }
         ]
     }
 };
 
-export const kainji = (wss, client) => {
+export const parasEnergy = (wss, client) => {
     client.on('connect', function () {
         //subscribe to topic
 

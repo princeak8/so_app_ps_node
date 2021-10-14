@@ -1,56 +1,28 @@
 var WebSocket = require('ws');
-const { transmissionData, generateValues } = require('../../utilities');
+const { powerData, generateValues } = require('../../utilities');
 
-const topic = 'alaoji/tr';
+const topic = 'alaoji/pr';
 
 const preparedData = () => {
     return {
-        id: "alaoji",
-        lines: [
+        "id": "alaojiPs",
+        "units": [
             {
-                id: "l7a",
-                td: transmissionData(generateValues())
+                "id": "gt1",
+                "pd": powerData(generateValues())
             },
             {
-                id: "l8a",
-                td: transmissionData(generateValues())
+                "id": "gt2",
+                "pd": powerData(generateValues())
             },
             {
-                id: "t4a",
-                td: transmissionData(generateValues())
+                "id": "gt3",
+                "pd": powerData(generateValues())
             },
             {
-                id: "f1a",
-                td: transmissionData(generateValues())
-            },
-            {
-                id: "f2a",
-                td: transmissionData(generateValues())
-            },
-            {
-                id: "a1k",
-                td: transmissionData(generateValues())
-            },
-            {
-                id: "a2k",
-                td: transmissionData(generateValues())
-            },
-            {
-                id: "a23w",
-                td: transmissionData(generateValues())
-            },
-            {
-                id: "a24w",
-                td: transmissionData(generateValues())
-            },
-            {
-                id: "a23b",
-                td: transmissionData(generateValues())
-            },
-            {
-                id: "a26b",
-                td: transmissionData(generateValues())
-            },
+                "id": "gt4",
+                "pd": powerData(generateValues())
+            }
         ]
     }
 };
@@ -76,16 +48,30 @@ export const alaoji = (wss, client) => {
         console.log("failed to connect: "+error);
     })
 
-    client.on('message', async function (topic, message) {
+    client.on('message', async function (sentTopic, message) {
         //console.log('message from mqtt: ', message.toString());
         wss.clients.forEach((wsClient) => {
             //console.log('client ready');
-            if (wsClient.readyState === WebSocket.OPEN) {
+            if (wsClient.readyState === WebSocket.OPEN && sentTopic == topic) {
+                message = sanitizeData(message, sentTopic);
                 //wsData = [data];
-                //const vals = preparedData();
-                const vals = message.toString();
-                wsClient.send(message.toString());
+                //const vals = message.toString();
+                const vals = preparedData();
+                wsClient.send(vals);
             }
         });
     })
 };
+
+const sanitizeData = (message, topic) => {
+    if(topic == ncTopic) {
+        if(lastData == '') {
+            message = ncData;
+        }else{
+            lastData["nc"] = true;
+            message = lastData;
+        }
+    }else{
+        lastData = message;
+    }
+}

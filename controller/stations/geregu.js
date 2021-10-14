@@ -1,49 +1,29 @@
 var WebSocket = require('ws');
 const { powerData, generateValues } = require('../../utilities');
 
-const topic = 'kainji/pr';
+const topic = 'geregu/pr';
 
 const preparedData = () => {
     return {
-        "id": "kainjiPs",
+        "id": "gereguPs",
         "units": [
             {
-                "id": "1g5",
+                "id": "gt11",
                 "pd": powerData(generateValues())
             },
             {
-                "id": "1g6",
+                "id": "gt12",
                 "pd": powerData(generateValues())
             },
             {
-                "id": "1g7",
-                "pd": powerData(generateValues())
-            },
-            {
-                "id": "1g8",
-                "pd": powerData(generateValues())
-            },
-            {
-                "id": "1g9",
-                "pd": powerData(generateValues())
-            },
-            {
-                "id": "1g10",
-                "pd": powerData(generateValues())
-            },
-            {
-                "id": "1g11",
-                "pd": powerData(generateValues())
-            },
-            {
-                "id": "1g12",
+                "id": "gt13",
                 "pd": powerData(generateValues())
             }
         ]
     }
 };
 
-export const kainji = (wss, client) => {
+export const geregu = (wss, client) => {
     client.on('connect', function () {
         //subscribe to topic
 
