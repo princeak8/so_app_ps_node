@@ -8,7 +8,6 @@ const send = (wss, client) => {
     afamVi(wss, client);
     alaoji(wss, client);
     azuraIpp(wss, client);
-    benin(wss, client);
     dadinKowa(wss, client);
     delta(wss, client);
     egbin(wss, client);
