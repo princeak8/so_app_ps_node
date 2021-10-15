@@ -57,9 +57,9 @@ wss.on('connection', (ws) => {
 });
 
 const options={
-    clientId:"mqttjs01",
-    username:"akalo",
-    password:"akalo88",
+    clientId:"mqttjs02",
+    username:process.env.MQTT_USER,
+    password:process.env.MQTT_PASS,
     clean:true
 };
 //host = "mqtt://ec2-34-212-195-204.us-west-2.compute.amazonaws.com";//"mqtt://127.0.0.1"
@@ -67,6 +67,7 @@ const host = "mqtt://127.0.0.1";
 var client  = mqtt.connect(host, options);
 
 StationsController(wss, client);
+//StationsController(wss, host, options);
 
 // setInterval(function(){
 //     wss.clients.forEach((client) => {

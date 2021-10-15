@@ -15,6 +15,15 @@ const preparedData = () => {
     }
 };
 
+const ncData = () => {
+    return {
+        id: "gbarainPs",
+        "nc": true,
+    }
+}
+
+const lastData = ''; 
+
 export const gbarain = (wss, client) => {
     client.on('connect', function () {
         //subscribe to topic
@@ -43,8 +52,7 @@ export const gbarain = (wss, client) => {
             if (wsClient.readyState === WebSocket.OPEN && sentTopic == topic) {
                 message = sanitizeData(message, sentTopic);
                 //wsData = [data];
-                //const vals = message.toString();
-                const vals = preparedData();
+                const vals = message.toString();
                 wsClient.send(vals);
             }
         });
@@ -52,14 +60,15 @@ export const gbarain = (wss, client) => {
 };
 
 const sanitizeData = (message, topic) => {
-    if(topic == ncTopic) {
-        if(lastData == '') {
-            message = ncData;
-        }else{
-            lastData["nc"] = true;
-            message = lastData;
-        }
-    }else{
-        lastData = message;
-    }
+    // if(topic == ncTopic) {
+    //     if(lastData == '') {
+    //         message = ncData;
+    //     }else{
+    //         lastData["nc"] = true;
+    //         message = lastData;
+    //     }
+    // }else{
+    //     lastData = message;
+    // }
+    return message;
 }
