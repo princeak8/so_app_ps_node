@@ -1,7 +1,9 @@
 var WebSocket = require('ws');
 const { powerData, generateValues } = require('../../utilities');
 
-const topic = 'odukpaniNipp/pr';
+//const topic = 'odukpaniNipp/pr';
+const topic = 'odukpanits/tv';
+const ncTopic = 'odukpanits/status';
 
 const preparedData = () => {
     return {
@@ -33,7 +35,8 @@ const preparedData = () => {
 
 const ncData = () => {
     return {
-        id: "odukpaniNippPs",
+        // id: "odukpaniNippPs",
+        id: "odukpaniGs",
         "nc": true,
     }
 }
@@ -49,12 +52,10 @@ export const odukpaniNipp = (wss, client) => {
                 console.log(err);
             }
         })
-        setInterval(function(){
-            const val = preparedData();
-            client.publish(topic, JSON.stringify(val));
-            
-            
-        }, 30000);
+        // setInterval(function(){
+        //     const val = preparedData();
+        //     client.publish(topic, JSON.stringify(val));
+        // }, 30000);
     })
 
     client.on('error', function (error) {

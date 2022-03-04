@@ -1,39 +1,18 @@
 var WebSocket = require('ws');
 const { powerData, generateValues } = require('../../utilities');
 
-const topic = 'gereguGs/pv';
-const ncTopic = 'gereguGs/status';
-
-const preparedData = () => {
-    return {
-        "id": "gereguPs",
-        "units": [
-            {
-                "id": "gt11",
-                "pd": powerData(generateValues())
-            },
-            {
-                "id": "gt12",
-                "pd": powerData(generateValues())
-            },
-            {
-                "id": "gt13",
-                "pd": powerData(generateValues())
-            }
-        ]
-    }
-};
+const topic = 'omotoso11ts/pv';
 
 const ncData = () => {
     return {
-        id: "gereguPs",
+        id: "omotosho1",
         "nc": true,
     }
 }
 
-const lastData = ''; 
+const lastData = '';
 
-export const geregu = (wss, client) => {
+export const omotoshoGas1 = (wss, client) => {
     client.on('connect', function () {
         //subscribe to topic
 
@@ -42,12 +21,6 @@ export const geregu = (wss, client) => {
                 console.log(err);
             }
         })
-        // setInterval(function(){
-        //     const val = preparedData();
-        //     client.publish(topic, JSON.stringify(val));
-            
-            
-        // }, 30000);
     })
 
     client.on('error', function (error) {
@@ -62,6 +35,7 @@ export const geregu = (wss, client) => {
                 message = sanitizeData(message, sentTopic);
                 //wsData = [data];
                 const vals = message.toString();
+                // console.log(vals);
                 wsClient.send(vals);
             }
         });

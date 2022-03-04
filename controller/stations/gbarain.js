@@ -1,7 +1,8 @@
 var WebSocket = require('ws');
 const { powerData, generateValues } = require('../../utilities');
 
-const topic = 'gbarain/pr';
+const topic = 'gbaraints/pv';
+const ncTopic = 'gbaraints/status';
 
 const preparedData = () => {
     return {
@@ -17,7 +18,7 @@ const preparedData = () => {
 
 const ncData = () => {
     return {
-        id: "gbarainPs",
+        id: "gbarain",
         "nc": true,
     }
 }
@@ -33,12 +34,11 @@ export const gbarain = (wss, client) => {
                 console.log(err);
             }
         })
-        setInterval(function(){
-            const val = preparedData();
-            client.publish(topic, JSON.stringify(val));
+        // setInterval(function(){
+        //     const val = preparedData();
+        //     client.publish(topic, JSON.stringify(val));
             
-            
-        }, 30000);
+        // }, 30000);
     })
 
     client.on('error', function (error) {
@@ -53,6 +53,7 @@ export const gbarain = (wss, client) => {
                 message = sanitizeData(message, sentTopic);
                 //wsData = [data];
                 const vals = message.toString();
+                // console.log(vals);
                 wsClient.send(vals);
             }
         });

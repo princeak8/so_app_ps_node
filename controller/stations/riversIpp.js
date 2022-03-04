@@ -1,7 +1,8 @@
 var WebSocket = require('ws');
 const { powerData, generateValues } = require('../../utilities');
 
-const topic = 'riversIpp/pr';
+const topic = 'riversIppPs/pr';
+const ncTopic = 'riversIppPs/status';
 
 const preparedData = () => {
     return {
@@ -22,7 +23,7 @@ const ncData = () => {
     }
 }
 
-const lastData = '';
+var lastData = '';
 
 export const riversIpp = (wss, client) => {
     client.on('connect', function () {
@@ -33,12 +34,12 @@ export const riversIpp = (wss, client) => {
                 console.log(err);
             }
         })
-        setInterval(function(){
-            const val = preparedData();
-            client.publish(topic, JSON.stringify(val));
+        // setInterval(function(){
+        //     const val = preparedData();
+        //     client.publish(topic, JSON.stringify(val));
             
             
-        }, 30000);
+        // }, 30000);
     })
 
     client.on('error', function (error) {
@@ -60,15 +61,15 @@ export const riversIpp = (wss, client) => {
 };
 
 const sanitizeData = (message, topic) => {
-    // if(topic == ncTopic) {
-    //     if(lastData == '') {
-    //         message = ncData;
-    //     }else{
-    //         lastData["nc"] = true;
-    //         message = lastData;
-    //     }
-    // }else{
-    //     lastData = message;
-    // }
+    if(topic == ncTopic) {
+        if(lastData == '') {
+            message = ncData;
+        }else{
+            lastData["nc"] = true;
+            message = lastData;
+        }
+    }else{
+        lastData = message;
+    }
     return message;
 }
