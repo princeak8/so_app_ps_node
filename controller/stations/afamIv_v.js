@@ -25,6 +25,7 @@ const preparedData = () => {
 
 export const afamIv_v = (wss, client) => {
     client.on('connect', function () {
+        console.log('connected');
         //subscribe to topic
 
         client.subscribe(topic, function (err) {
@@ -45,7 +46,7 @@ export const afamIv_v = (wss, client) => {
     })
 
     client.on('message', async function (sentTopic, message) {
-        //console.log('message from mqtt: ', message.toString());
+        console.log('message from mqtt: ', message.toString());
         wss.clients.forEach((wsClient) => {
             //console.log('client ready');
             if (wsClient.readyState === WebSocket.OPEN && sentTopic == topic) {

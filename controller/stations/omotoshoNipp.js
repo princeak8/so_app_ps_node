@@ -49,7 +49,7 @@ export const omotoshoNipp = (wss, client) => {
     })
 
     client.on('message', async function (sentTopic, message) {
-        //console.log('message from mqtt: ', message.toString());
+        console.log('message from mqtt: ', message.toString());
         wss.clients.forEach((wsClient) => {
             //console.log('client ready');
             if (wsClient.readyState === WebSocket.OPEN && sentTopic == topic) {

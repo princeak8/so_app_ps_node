@@ -6,6 +6,8 @@ var mqtt = require('mqtt');
 const http = require('http');
 var WebSocket = require('ws');
 const queryString = require('query-string');
+const axios = require('axios');
+
 
 const wss = new WebSocket.Server({ noServer: true });
 //const wss2 = new WebSocket.Server({ port: 8085, noServer: true });
@@ -57,7 +59,7 @@ wss.on('connection', (ws) => {
 });
 
 const options={
-    clientId:"mqttjs01",
+    clientId:"mqttjs02",
     username:"akalo",
     password:"akalo88",
     clean:true
@@ -65,6 +67,16 @@ const options={
 //host = "mqtt://ec2-34-212-195-204.us-west-2.compute.amazonaws.com";//"mqtt://127.0.0.1"
 const host = "mqtt://127.0.0.1";
 var client  = mqtt.connect(host, options);
+// let formData =  {token: '123'};
+// const url = "http://localhost:3001/get_client";
+// axios.post(url, formData)
+//         .then((res) => {
+//             console.log('response: ', res.data);
+//         })
+//         .catch((error) => {
+//             console.log("An error occured while trying to perform the operation "+error.message);
+//             throw error;
+//         });
 
 StationsController(wss, client);
 
