@@ -26,3 +26,7 @@ export * from './sapeleNipp';
 export * from './sapeleSteam';
 export * from './shiroro';
 export * from './transamadi';
+
+export * from './ikotEkpene';
+export * from './omotoshoGas1';
+export * from './omotoshoGas2';

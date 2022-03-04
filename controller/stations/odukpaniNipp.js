@@ -1,7 +1,9 @@
 var WebSocket = require('ws');
 const { powerData, generateValues } = require('../../utilities');
 
-const topic = 'odukpaniNipp/pr';
+//const topic = 'odukpaniNipp/pr';
+const topic = 'odukpanits/tv';
+const ncTopic = 'odukpanits/status';
 
 const preparedData = () => {
     return {
@@ -31,6 +33,16 @@ const preparedData = () => {
     }
 };
 
+const ncData = () => {
+    return {
+        // id: "odukpaniNippPs",
+        id: "odukpaniGs",
+        "nc": true,
+    }
+}
+
+const lastData = '';
+
 export const odukpaniNipp = (wss, client) => {
     client.on('connect', function () {
         //subscribe to topic
@@ -40,12 +52,10 @@ export const odukpaniNipp = (wss, client) => {
                 console.log(err);
             }
         })
-        setInterval(function(){
-            const val = preparedData();
-            client.publish(topic, JSON.stringify(val));
-            
-            
-        }, 30000);
+        // setInterval(function(){
+        //     const val = preparedData();
+        //     client.publish(topic, JSON.stringify(val));
+        // }, 30000);
     })
 
     client.on('error', function (error) {
@@ -59,8 +69,7 @@ export const odukpaniNipp = (wss, client) => {
             if (wsClient.readyState === WebSocket.OPEN && sentTopic == topic) {
                 message = sanitizeData(message, sentTopic);
                 //wsData = [data];
-                //const vals = message.toString();
-                const vals = preparedData();
+                const vals = message.toString();
                 wsClient.send(vals);
             }
         });
@@ -68,14 +77,15 @@ export const odukpaniNipp = (wss, client) => {
 };
 
 const sanitizeData = (message, topic) => {
-    if(topic == ncTopic) {
-        if(lastData == '') {
-            message = ncData;
-        }else{
-            lastData["nc"] = true;
-            message = lastData;
-        }
-    }else{
-        lastData = message;
-    }
+    // if(topic == ncTopic) {
+    //     if(lastData == '') {
+    //         message = ncData;
+    //     }else{
+    //         lastData["nc"] = true;
+    //         message = lastData;
+    //     }
+    // }else{
+    //     lastData = message;
+    // }
+    return message;
 }
