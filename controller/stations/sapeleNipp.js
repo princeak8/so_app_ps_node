@@ -2,7 +2,7 @@ var WebSocket = require('ws');
 const { powerData, generateValues } = require('../../utilities');
 
 const topic = 'sapelets/pv';
-const ncTopic = 'ihovborts/status';
+const ncTopic = 'sapelets/status';
 
 const preparedData = () => {
     return {

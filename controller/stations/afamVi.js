@@ -60,6 +60,7 @@ export const afamVi = (wss, client) => {
 
     client.on('message', async function (sentTopic, message) {
         //console.log('message from mqtt: ', message.toString());
+        // if(sentTopic=='afam6ts/tv') console.log(message.toString());
         wss.clients.forEach((wsClient) => {
             //console.log('client ready');
             if (wsClient.readyState === WebSocket.OPEN && sentTopic == topic) {
@@ -85,3 +86,21 @@ const sanitizeData = (message, topic) => {
     // }
     return message;
 }
+
+/*
+Sample Data
+{
+    "id":"afamViTs",
+    "t":"12:13:2", 
+    "lines":[
+        {
+            "id":"ada200",
+            "td":{"mw": 0.00,"A": 0.00,"V":333.48,"mvar": 0.00}
+        },
+        {
+            "id":"adb200",
+            "td":{"mw": 0.00,"A": 0.00,"V":333.42,"mvar": 0.00}
+        }
+    ]
+}
+*/

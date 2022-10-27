@@ -17,6 +17,7 @@ const UsersController = require('./controller/users');
 const ConnectionsController = require('./controller/connections');
 //const StationsController = require('./controller/stations');
 import StationsController from './controller/stations';
+import Stations2Controller from './controller/stations2';
 
 const app = express();
 
@@ -66,9 +67,19 @@ const options={
     password:process.env.MQTT_PASS,
     clean:true
 };
+
+const options2={
+    clientId:"mqttjs01",
+    username:process.env.MQTT_AWS_USER,
+    password:process.env.MQTT_AWS_PASS,
+    clean:true
+};
 //host = "mqtt://ec2-34-212-195-204.us-west-2.compute.amazonaws.com";//"mqtt://127.0.0.1"
-const host = "mqtt://127.0.0.1";
+
+const host = "mqtt://102.89.11.82";
+const host2 = "mqtt://ec2-3-88-196-213.compute-1.amazonaws.com";
 var client  = mqtt.connect(host, options);
+var client2  = mqtt.connect(host2, options2);
 // let formData =  {token: '123'};
 // const url = "http://localhost:3001/get_client";
 // axios.post(url, formData)
@@ -81,6 +92,7 @@ var client  = mqtt.connect(host, options);
 //         });
 
 StationsController(wss, client);
+Stations2Controller(wss, client2);
 //StationsController(wss, host, options);
 
 // setInterval(function(){

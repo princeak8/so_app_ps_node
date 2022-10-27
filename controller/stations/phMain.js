@@ -1,12 +1,12 @@
 var WebSocket = require('ws');
 const { powerData, generateValues } = require('../../utilities');
 
-const topic = 'riversIppPs/pr';
-const ncTopic = 'riversIppPs/status';
+const topic = 'phmains/tv';
+const ncTopic = 'phmains/status';
 
 const preparedData = () => {
     return {
-        "id": "riversIppPs",
+        "id": "phMain",
         "units": [
             {
                 "id": "gt1",
@@ -18,14 +18,14 @@ const preparedData = () => {
 
 const ncData = () => {
     return {
-        id: "riversIppPs",
+        id: "phMain",
         "nc": true,
     }
 }
 
 var lastData = '';
 
-export const riversIpp = (wss, client) => {
+export const phMain = (wss, client) => {
     client.on('connect', function () {
         //subscribe to topic
 
@@ -46,7 +46,7 @@ export const riversIpp = (wss, client) => {
 
     client.on('message', async function (sentTopic, message) {
         //console.log('message from mqtt: ', message.toString());
-        // if(sentTopic=='riversIppPs/pr') console.log(message.toString())
+        // if(sentTopic=='phmains/tv') console.log(message.toString())
         wss.clients.forEach((wsClient) => {
             //console.log('client ready');
             if (wsClient.readyState === WebSocket.OPEN && sentTopic == topic) {
@@ -72,17 +72,3 @@ const sanitizeData = (message, topic) => {
     }
     return message;
 }
-
-/*
-Sample Data
-{
-    "id":"riversIppPs",
-    "t":"12:56:59", 
-    "units":[
-        {
-            "id":"gt1",
-            "gd":{"mw":-162.42,"A":747.78,"V":125.49,"mvar": 6.07}
-        }
-    ]
-}
-*/

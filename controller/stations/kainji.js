@@ -1,7 +1,8 @@
 var WebSocket = require('ws');
 const { powerData, generateValues } = require('../../utilities');
 
-const topic = 'kainji/pr';
+const topic = 'kainjits/tv';
+const ncTopic = 'kainjits/status';
 
 const preparedData = () => {
     return {

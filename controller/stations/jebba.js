@@ -1,7 +1,8 @@
 var WebSocket = require('ws');
 const { powerData, generateValues } = require('../../utilities');
 
-const topic = 'jebba/pr';
+const topic = 'jebbaTs/tv';
+const ncTopic = 'jebbaTs/status';
 
 const preparedData = () => {
     return {
@@ -53,12 +54,10 @@ export const jebba = (wss, client) => {
                 console.log(err);
             }
         })
-        setInterval(function(){
-            const val = preparedData();
-            client.publish(topic, JSON.stringify(val));
-            
-            
-        }, 30000);
+        // setInterval(function(){
+        //     const val = preparedData();
+        //     client.publish(topic, JSON.stringify(val));
+        // }, 30000);
     })
 
     client.on('error', function (error) {
@@ -67,6 +66,7 @@ export const jebba = (wss, client) => {
 
     client.on('message', async function (sentTopic, message) {
         //console.log('message from mqtt: ', message.toString());
+        // if(sentTopic=='jebbaTs/tv') console.log(message.toString());
         wss.clients.forEach((wsClient) => {
             //console.log('client ready');
             if (wsClient.readyState === WebSocket.OPEN && sentTopic == topic) {
@@ -92,3 +92,21 @@ const sanitizeData = (message, topic) => {
     // }
     return message;
 }
+
+/*
+Sample Data
+{
+    "id":"jebbaTs",
+    "t":"12:35:1", 
+    "lines":[
+        {
+            "id":"b8j",
+            "td":{"mw":180.75,"A":325.72,"V":335.08,"mvar":-55.45}
+        },
+        {
+            "id":"b9j",
+            "td":{"mw":174.67,"A":321.45,"V":329.81,"mvar":-55.00}
+        }
+    ]
+}
+*/

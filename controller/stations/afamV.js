@@ -1,15 +1,20 @@
 var WebSocket = require('ws');
+var mqtt = require('mqtt');
 const { powerData, generateValues } = require('../../utilities');
 
-const topic = 'riversIppPs/pr';
-const ncTopic = 'riversIppPs/status';
+const topic = 'afam5gs/pv';
+const status = 'afam5gs/status';
 
 const preparedData = () => {
     return {
-        "id": "riversIppPs",
+        "id": "afamVPs",
         "units": [
             {
-                "id": "gt1",
+                "id": "gt19",
+                "pd": powerData(generateValues())
+            },
+            {
+                "id": "gt20",
                 "pd": powerData(generateValues())
             }
         ]
@@ -18,16 +23,16 @@ const preparedData = () => {
 
 const ncData = () => {
     return {
-        id: "riversIppPs",
+        id: "afamVPs",
         "nc": true,
     }
 }
 
-var lastData = '';
+const lastData = ''; 
 
-export const riversIpp = (wss, client) => {
+export const afamV = (wss, client) => {
     client.on('connect', function () {
-        //subscribe to topic
+        //console.log('connected to mqtt afamIv_v');
 
         client.subscribe(topic, function (err) {
             if (err) {
@@ -41,18 +46,21 @@ export const riversIpp = (wss, client) => {
     })
 
     client.on('error', function (error) {
-        console.log("failed to connect: "+error);
+        console.log("failed to connect Afam V: "+error);
     })
 
     client.on('message', async function (sentTopic, message) {
-        //console.log('message from mqtt: ', message.toString());
-        // if(sentTopic=='riversIppPs/pr') console.log(message.toString())
+        //console.log('message from mqtt: ', sentTopic+' '+topic);
+        // if(sentTopic=='afam5gs/pv') console.log(message.toString());
         wss.clients.forEach((wsClient) => {
             //console.log('client ready');
             if (wsClient.readyState === WebSocket.OPEN && sentTopic == topic) {
                 message = sanitizeData(message, sentTopic);
+                //console.log('Afam V message sent out: ', sentTopic);
                 //wsData = [data];
+                //const vals = preparedData();
                 const vals = message.toString();
+                //console.log('sent data', vals)
                 wsClient.send(vals);
             }
         });
@@ -60,28 +68,31 @@ export const riversIpp = (wss, client) => {
 };
 
 const sanitizeData = (message, topic) => {
-    if(topic == ncTopic) {
-        if(lastData == '') {
-            message = ncData;
-        }else{
-            lastData["nc"] = true;
-            message = lastData;
-        }
-    }else{
-        lastData = message;
-    }
+    // if(topic == ncTopic) {
+    //     if(lastData == '') {
+    //         message = ncData;
+    //     }else{
+    //         lastData["nc"] = true;
+    //         message = lastData;
+    //     }
+    // }else{
+    //     lastData = message;
+    // }
     return message;
 }
 
 /*
-Sample Data
+Sample Response
+
 {
-    "id":"riversIppPs",
-    "t":"12:56:59", 
+    "id":"afamVPs",
+    "t":"12:0:38", 
     "units":[
         {
-            "id":"gt1",
-            "gd":{"mw":-162.42,"A":747.78,"V":125.49,"mvar": 6.07}
+            "id":"gt20",
+            "gd":{
+                "mw":-127.94,"A":222.03,"V":333.72,"mvar": 3.25
+            }
         }
     ]
 }

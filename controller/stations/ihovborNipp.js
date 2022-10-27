@@ -58,6 +58,7 @@ export const ihovborNipp = (wss, client) => {
 
     client.on('message', async function (sentTopic, message) {
         //console.log('message from mqtt: ', message.toString());
+        // if(sentTopic=='ihovborts/tv') console.log(message.toString());
         wss.clients.forEach((wsClient) => {
             //console.log('client ready');
             if (wsClient.readyState === WebSocket.OPEN && sentTopic == topic) {
@@ -83,3 +84,37 @@ const sanitizeData = (message, topic) => {
     // }
     return message;
 }
+
+/*
+Sample Data
+{
+    "id":"ihovborNippPs",
+    "t":"12:31:22", 
+    "units":[
+        {
+            "id":"gt1",
+            "gd":{"mw": 0.00,"A": 0.00,"V":334.26,"mvar": 0.00}
+        },
+        {
+            "id":"gt2",
+            "gd":{"mw": 0.00,"A": 0.00,"V":333.73,"mvar": 0.00}
+        },
+        {
+            "id":"gt3",
+            "gd":{"mw": 0.00,"A": 0.00,"V":333.95,"mvar": 0.00}
+        },
+        {
+            "id":"gt4",
+            "gd":{"mw": 0.00,"A": 0.00,"V": 0.00,"mvar": 0.00}
+        },
+        {
+            "id":"ohl1",
+            "gd":{"mw":-275.19,"A":476.31,"V":334.08,"mvar":12.90}
+        },
+        {
+            "id":"ohl2",
+            "gd":{"mw":-67.92,"A":117.58,"V":333.92,"mvar": 3.40}
+        }
+    ]
+}
+*/

@@ -1,11 +1,11 @@
 var WebSocket = require('ws');
 const { powerData, generateValues } = require('../../utilities');
 
-const topic = 'omoku/pr';
+const topic = 'omoku/pv';
 
 const preparedData = () => {
     return {
-        "id": "omokuPs",
+        "id": "omokuPs1",
         "units": [
             {
                 "id": "gt1",
@@ -37,7 +37,7 @@ const preparedData = () => {
 
 const ncData = () => {
     return {
-        id: "omokuPs",
+        id: "omokuPs1",
         "nc": true,
     }
 }
@@ -53,12 +53,10 @@ export const omoku = (wss, client) => {
                 console.log(err);
             }
         })
-        setInterval(function(){
-            const val = preparedData();
-            client.publish(topic, JSON.stringify(val));
-            
-            
-        }, 30000);
+        // setInterval(function(){
+        //     const val = preparedData();
+        //     client.publish(topic, JSON.stringify(val));
+        // }, 30000);
     })
 
     client.on('error', function (error) {
@@ -67,6 +65,7 @@ export const omoku = (wss, client) => {
 
     client.on('message', async function (sentTopic, message) {
         //console.log('message from mqtt: ', message.toString());
+        if(sentTopic=='omoku/pv') console.log(message.toString())
         wss.clients.forEach((wsClient) => {
             //console.log('client ready');
             if (wsClient.readyState === WebSocket.OPEN && sentTopic == topic) {

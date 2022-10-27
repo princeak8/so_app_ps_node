@@ -1,11 +1,12 @@
 var WebSocket = require('ws');
 const { powerData, generateValues } = require('../../utilities');
 
-const topic = 'okpai/pr';
+const topic = 'okpaiippGs/tv';
+const status = 'okpaiippGs/status';
 
 const preparedData = () => {
     return {
-        "id": "okpaiPs",
+        "id": "okpaiGs",
         "units": [
             {
                 "id": "gt11",
@@ -25,7 +26,7 @@ const preparedData = () => {
 
 const ncData = () => {
     return {
-        id: "okpaiPs",
+        id: "okpaiGs",
         "nc": true,
     }
 }
@@ -41,20 +42,23 @@ export const okpai = (wss, client) => {
                 console.log(err);
             }
         })
-        setInterval(function(){
-            const val = preparedData();
-            client.publish(topic, JSON.stringify(val));
-            
-            
-        }, 30000);
+        // setInterval(function(){
+        //     const val = preparedData();
+        //     client.publish(topic, JSON.stringify(val));
+        // }, 30000);
     })
 
     client.on('error', function (error) {
         console.log("failed to connect: "+error);
     })
 
+    var topics = [];
     client.on('message', async function (sentTopic, message) {
+        if(!topics.includes(sentTopic)) topics.push(sentTopic);
+        // console.log(topics);
+
         //console.log('message from mqtt: ', message.toString());
+        // if(sentTopic=='okpaiippGs/tv') console.log(message.toString())
         wss.clients.forEach((wsClient) => {
             //console.log('client ready');
             if (wsClient.readyState === WebSocket.OPEN && sentTopic == topic) {

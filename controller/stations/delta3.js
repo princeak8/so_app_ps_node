@@ -1,31 +1,34 @@
 var WebSocket = require('ws');
 const { powerData, generateValues } = require('../../utilities');
 
-const topic = 'riversIppPs/pr';
-const ncTopic = 'riversIppPs/status';
+const topic = 'delta3gs/pv';
 
 const preparedData = () => {
     return {
-        "id": "riversIppPs",
+        "id": "delta3",
         "units": [
             {
-                "id": "gt1",
+                "id": "tr3",
                 "pd": powerData(generateValues())
-            }
+            },
+            {
+                "id": "tr4",
+                "pd": powerData(generateValues())
+            },
         ]
     }
 };
 
 const ncData = () => {
     return {
-        id: "riversIppPs",
+        id: "delta3",
         "nc": true,
     }
 }
 
-var lastData = '';
+const lastData = '';
 
-export const riversIpp = (wss, client) => {
+export const delta3 = (wss, client) => {
     client.on('connect', function () {
         //subscribe to topic
 
@@ -45,8 +48,8 @@ export const riversIpp = (wss, client) => {
     })
 
     client.on('message', async function (sentTopic, message) {
-        //console.log('message from mqtt: ', message.toString());
-        // if(sentTopic=='riversIppPs/pr') console.log(message.toString())
+        // console.log('message from mqtt: ', message.toString());
+        // if(sentTopic=='delta3gs/pv') console.log(message.toString());
         wss.clients.forEach((wsClient) => {
             //console.log('client ready');
             if (wsClient.readyState === WebSocket.OPEN && sentTopic == topic) {
@@ -60,28 +63,32 @@ export const riversIpp = (wss, client) => {
 };
 
 const sanitizeData = (message, topic) => {
-    if(topic == ncTopic) {
-        if(lastData == '') {
-            message = ncData;
-        }else{
-            lastData["nc"] = true;
-            message = lastData;
-        }
-    }else{
-        lastData = message;
-    }
+    // if(topic == ncTopic) {
+    //     if(lastData == '') {
+    //         message = ncData;
+    //     }else{
+    //         lastData["nc"] = true;
+    //         message = lastData;
+    //     }
+    // }else{
+    //     lastData = message;
+    // }
     return message;
 }
 
 /*
-Sample Data
+ Sample Data
 {
-    "id":"riversIppPs",
-    "t":"12:56:59", 
-    "units":[
+    "id":"delta3",
+    "t":"12:19:40", 
+    "lines":[
         {
-            "id":"gt1",
-            "gd":{"mw":-162.42,"A":747.78,"V":125.49,"mvar": 6.07}
+            "id":"tr5",
+            "gd":{"mw":31.30,"A":138.38,"V":132.56,"mvar": 5.79}
+        },
+        {
+            "id":"tr6",
+            "gd":{"mw":34.26,"A":149.39,"V":132.60,"mvar": 2.95}
         }
     ]
 }
