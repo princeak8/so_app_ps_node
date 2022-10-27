@@ -67,7 +67,7 @@ export const afamIv = (wss, client) => {
                 message = sanitizeData(message, sentTopic);
                 //console.log('Afam IV message sent out: ', sentTopic);
                 const vals = message.toString();
-                console.log('sent data', vals)
+                // console.log('sent data', vals)
                 wsClient.send(vals);
             }
         });

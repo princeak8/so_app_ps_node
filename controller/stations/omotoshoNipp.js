@@ -57,8 +57,12 @@ export const omotoshoNipp = (wss, client) => {
         console.log("failed to connect: "+error);
     })
 
+    var topics = [];
     client.on('message', async function (sentTopic, message) {
-        console.log('message from mqtt: ', message.toString());
+        if(!topics.includes(sentTopic)) topics.push(sentTopic);
+        // console.log(topics);
+        // if(sentTopic=='omotoso2ts/tv') console.log(message.toString())
+        // console.log('message from mqtt: ', message.toString());
         wss.clients.forEach((wsClient) => {
             //console.log('client ready');
             if (wsClient.readyState === WebSocket.OPEN && sentTopic == topic) {
@@ -84,6 +88,7 @@ export const omotoshoNipp = (wss, client) => {
 };
 
 /*
+Sample Data
 {
     "id":"omotoshoNippPs",
     "t":"13:57:14", 

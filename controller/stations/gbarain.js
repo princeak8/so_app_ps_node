@@ -45,8 +45,12 @@ export const gbarain = (wss, client) => {
         console.log("failed to connect: "+error);
     })
 
+    var topics = [];
     client.on('message', async function (sentTopic, message) {
+        if(!topics.includes(sentTopic)) topics.push(sentTopic);
+        // console.log(topics);
         //console.log('message from mqtt: ', message.toString());
+        // if(sentTopic=='gbaraints/pv') console.log(message.toString());
         wss.clients.forEach((wsClient) => {
             //console.log('client ready');
             if (wsClient.readyState === WebSocket.OPEN && sentTopic == topic) {

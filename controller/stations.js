@@ -6,20 +6,21 @@ import {
 
 const send = (wss, client) => {
     geregu(wss, client);
-    // omotoshoNipp(wss, client);
-    // omotoshoGas1(wss, client);
-    // omotoshoGas2(wss, client);
-    // olorunsogoGas(wss, client);
-    // olorunsogoNipp(wss, client);
+    omotoshoNipp(wss, client);
+    omotoshoGas1(wss, client);
+    omotoshoGas2(wss, client);
+    olorunsogoGas(wss, client);
+    olorunsogoNipp(wss, client);
+    alaoji(wss, client);
+    dadinKowa(wss, client);
+    gbarain(wss, client);
 
     // afamIv_v(wss, client);
     // afamVi(wss, client);
-    // alaoji(wss, client);
+    
     // azuraIpp(wss, client);
-    // dadinKowa(wss, client);
     // delta(wss, client);
     // egbin(wss, client);
-    // gbarain(wss, client);
     
     // gereguNipp(wss, client);
     // ibom(wss, client);

@@ -11,6 +11,8 @@ export * from './delta2';
 export * from './delta3';
 export * from './delta4';
 export * from './egbin';
+export * from './eket';
+export * from './ekim';
 export * from './gbarain';
 export * from './geregu';
 export * from './gereguNipp';

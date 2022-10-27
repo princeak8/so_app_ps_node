@@ -1,50 +1,39 @@
 var WebSocket = require('ws');
-const { powerData, generateValues } = require('../../utilities');
+const { transmissionData, generateValues } = require('../../utilities');
 
-const topic = 'omokugs/pv';
+const topic = 'eketts/tv';
+const ncTopic = 'eketts/status';
 
-const preparedData = () => {
+const preparedData = () => {    
     return {
-        "id": "omokuPs1",
-        "units": [
+        id: "eket",
+        lines: [
             {
-                "id": "gt1",
-                "pd": powerData(generateValues())
+                id: "e22t",
+                td: transmissionData(generateValues())
             },
             {
-                "id": "gt2",
-                "pd": powerData(generateValues())
+                id: "e21m",
+                td: transmissionData(generateValues())
             },
             {
-                "id": "gt3",
-                "pd": powerData(generateValues())
-            },
-            {
-                "id": "gt4",
-                "pd": powerData(generateValues())
-            },
-            {
-                "id": "gt5",
-                "pd": powerData(generateValues())
-            },
-            {
-                "id": "gt6",
-                "pd": powerData(generateValues())
+                id: "e22m",
+                td: transmissionData(generateValues())
             }
         ]
     }
-};
+}
 
 const ncData = () => {
     return {
-        id: "omokuPs1",
+        id: "eket",
         "nc": true,
     }
 }
 
-const lastData = '';
+var lastData = '';
 
-export const omoku = (wss, client) => {
+export const eket = (wss, client) => {
     client.on('connect', function () {
         //subscribe to topic
 
@@ -63,15 +52,13 @@ export const omoku = (wss, client) => {
         console.log("failed to connect: "+error);
     })
 
-    var topics = [];
     client.on('message', async function (sentTopic, message) {
-        if(!topics.includes(sentTopic)) topics.push(sentTopic);
-        // console.log(topics);
-        //console.log('message from mqtt: ', message.toString());
-        // if(sentTopic=='omokugs/pv') console.log(message.toString())
+        // console.log('message from mqtt: ', message.toString());
+        // if(sentTopic=='eketts/tv') console.log(message.toString());
         wss.clients.forEach((wsClient) => {
             //console.log('client ready');
             if (wsClient.readyState === WebSocket.OPEN && sentTopic == topic) {
+                //console.log('eket message sent out: ', sentTopic);
                 message = sanitizeData(message, sentTopic);
                 //wsData = [data];
                 const vals = message.toString();

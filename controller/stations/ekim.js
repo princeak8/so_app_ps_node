@@ -1,50 +1,31 @@
 var WebSocket = require('ws');
-const { powerData, generateValues } = require('../../utilities');
+const { transmissionData, generateValues } = require('../../utilities');
 
-const topic = 'omokugs/pv';
+const topic = 'ekimts/tv';
+const ncTopic = 'ekimts/status';
 
-const preparedData = () => {
+const preparedData = () => {    
     return {
-        "id": "omokuPs1",
-        "units": [
+        id: "ekim",
+        lines: [
             {
-                "id": "gt1",
-                "pd": powerData(generateValues())
-            },
-            {
-                "id": "gt2",
-                "pd": powerData(generateValues())
-            },
-            {
-                "id": "gt3",
-                "pd": powerData(generateValues())
-            },
-            {
-                "id": "gt4",
-                "pd": powerData(generateValues())
-            },
-            {
-                "id": "gt5",
-                "pd": powerData(generateValues())
-            },
-            {
-                "id": "gt6",
-                "pd": powerData(generateValues())
+                id: "ek1m",
+                td: transmissionData(generateValues())
             }
         ]
     }
-};
+}
 
 const ncData = () => {
     return {
-        id: "omokuPs1",
+        id: "ekim",
         "nc": true,
     }
 }
 
-const lastData = '';
+var lastData = '';
 
-export const omoku = (wss, client) => {
+export const ekim = (wss, client) => {
     client.on('connect', function () {
         //subscribe to topic
 
@@ -68,10 +49,11 @@ export const omoku = (wss, client) => {
         if(!topics.includes(sentTopic)) topics.push(sentTopic);
         // console.log(topics);
         //console.log('message from mqtt: ', message.toString());
-        // if(sentTopic=='omokugs/pv') console.log(message.toString())
+        // if(sentTopic=='ekimts/tv') console.log(message.toString());
         wss.clients.forEach((wsClient) => {
             //console.log('client ready');
             if (wsClient.readyState === WebSocket.OPEN && sentTopic == topic) {
+                //console.log('eket message sent out: ', sentTopic);
                 message = sanitizeData(message, sentTopic);
                 //wsData = [data];
                 const vals = message.toString();

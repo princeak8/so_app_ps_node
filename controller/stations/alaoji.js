@@ -1,7 +1,7 @@
 var WebSocket = require('ws');
 const { powerData, generateValues } = require('../../utilities');
 
-const topic = 'alaoji/pr';
+const topic = 'alaojinippts/tv';
 
 const preparedData = () => {
     return {
@@ -48,8 +48,6 @@ export const alaoji = (wss, client) => {
         setInterval(function(){
             const val = preparedData();
             client.publish(topic, JSON.stringify(val));
-            
-            
         }, 30000);
     })
 
@@ -59,6 +57,7 @@ export const alaoji = (wss, client) => {
 
     client.on('message', async function (sentTopic, message) {
         //console.log('message from mqtt: ', message.toString());
+        // if(sentTopic=='alaojinippts/tv') console.log(message.toString());
         wss.clients.forEach((wsClient) => {
             //console.log('client ready');
             if (wsClient.readyState === WebSocket.OPEN && sentTopic == topic) {
@@ -84,3 +83,21 @@ const sanitizeData = (message, topic) => {
     // }
     return message;
 }
+
+/*
+Sample Data
+{
+    "id":"alaoji",
+    "t":"18:40:6", 
+    "lines":[
+        {
+            "id":"l7a",
+            "td":{"mw":46.43,"A":80.31,"V":334.41,"mvar": 2.76}
+        },
+        {
+            "id":"l8a",
+            "td":{"mw":50.78,"A":87.88,"V":334.27,"mvar": 2.77}
+        }
+    ]
+}
+*/
