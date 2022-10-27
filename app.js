@@ -76,8 +76,8 @@ const options2={
 };
 //host = "mqtt://ec2-34-212-195-204.us-west-2.compute.amazonaws.com";//"mqtt://127.0.0.1"
 
-const host = "mqtt://102.89.11.82";
-const host2 = "mqtt://ec2-3-88-196-213.compute-1.amazonaws.com";
+const host = process.env.MQTT_HOST;//"mqtt://102.89.11.82";
+const host2 = process.env.MQTT_AWS_HOST;//"mqtt://ec2-3-88-196-213.compute-1.amazonaws.com";
 var client  = mqtt.connect(host, options);
 var client2  = mqtt.connect(host2, options2);
 // let formData =  {token: '123'};
