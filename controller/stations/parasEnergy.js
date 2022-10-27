@@ -1,7 +1,7 @@
 var WebSocket = require('ws');
 const { powerData, generateValues } = require('../../utilities');
 
-const topic = 'parasEnergy/pr';
+const topic = 'parasenergyPs/pv';
 
 const preparedData = () => {
     return {
@@ -73,19 +73,21 @@ export const parasEnergy = (wss, client) => {
                 console.log(err);
             }
         })
-        setInterval(function(){
-            const val = preparedData();
-            client.publish(topic, JSON.stringify(val));
-            
-            
-        }, 30000);
+        // setInterval(function(){
+        //     const val = preparedData();
+        //     client.publish(topic, JSON.stringify(val));
+        // }, 30000);
     })
 
     client.on('error', function (error) {
         console.log("failed to connect: "+error);
     })
 
+    var topics = [];
     client.on('message', async function (sentTopic, message) {
+        if(!topics.includes(sentTopic)) topics.push(sentTopic);
+        // console.log(topics);
+        // if(sentTopic=='parasenergyPs/pv') console.log(message.toString())
         //console.log('message from mqtt: ', message.toString());
         wss.clients.forEach((wsClient) => {
             //console.log('client ready');

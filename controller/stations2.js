@@ -1,5 +1,5 @@
 import {
-    afamIv, afamV, afamVi, delta2, delta3, delta4, egbin, ihovborNipp, jebba, kainji, odukpaniNipp, okpai, omoku, phMain, riversIpp, sapeleNipp, shiroro, eket, ekim
+    afamIv, afamV, afamVi, delta2, delta3, delta4, egbin, ihovborNipp, jebba, kainji, odukpaniNipp, okpai, omoku, phMain, riversIpp, sapeleNipp, shiroro, eket, ekim, parasEnergy
 } from './stations/index';
 
 const send = (wss, client) => {
@@ -22,6 +22,7 @@ const send = (wss, client) => {
     riversIpp(wss, client);
     sapeleNipp(wss, client);
     shiroro(wss, client);
+    // parasEnergy(wss, client);
 }
 
 export default send;

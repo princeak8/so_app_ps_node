@@ -14,6 +14,8 @@ const send = (wss, client) => {
     alaoji(wss, client);
     dadinKowa(wss, client);
     gbarain(wss, client);
+    okpai(wss, client);
+    parasEnergy(wss, client);
 
     // afamIv_v(wss, client);
     // afamVi(wss, client);
@@ -32,12 +34,12 @@ const send = (wss, client) => {
     // ikotEkpene(wss, client);
     // odukpaniNipp(wss, client);
 
-    okpai(wss, client);
+    
     
     // omoku(wss, client);
     // omotoshoGas(wss, client);
     
-    // parasEnergy(wss, client);
+    
     // riversIpp(wss, client);
     // sapeleNipp(wss, client);
     // sapeleSteam(wss, client);
