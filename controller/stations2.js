@@ -10,8 +10,8 @@ const send = (wss, client) => {
     delta3(wss, client);
     delta4(wss, client);
     egbin(wss, client);
-    eket(wss, client);
-    ekim(wss, client);
+    // eket(wss, client);
+    // ekim(wss, client);
     ihovborNipp(wss, client);
     jebba(wss, client);
     kainji(wss, client);

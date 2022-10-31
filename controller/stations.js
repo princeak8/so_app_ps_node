@@ -1,5 +1,5 @@
 import {
-    afamIv_v, afamVi, alaoji, azuraIpp, dadinKowa, delta, egbin, gbarain, geregu, gereguNipp, ibom, ihovborNipp, jebba, kainji, odukpaniNipp, okpai, olorunsogoGas, olorunsogoNipp, 
+    afamIv_v, afamVi, alaoji, azuraIpp, dadinKowa, delta, egbin, eket, ekim, gbarain, geregu, gereguNipp, ibom, ihovborNipp, jebba, kainji, odukpaniNipp, okpai, olorunsogoGas, olorunsogoNipp, 
     omoku, omotoshoGas, omotoshoNipp, parasEnergy, riversIpp, sapeleNipp, sapeleSteam, shiroro, transamadi, 
     ikotEkpene, omotoshoGas1, omotoshoGas2
 } from './stations/index';
@@ -16,6 +16,8 @@ const send = (wss, client) => {
     gbarain(wss, client);
     okpai(wss, client);
     parasEnergy(wss, client);
+    eket(wss, client);
+    ekim(wss, client);
 
     // afamIv_v(wss, client);
     // afamVi(wss, client);

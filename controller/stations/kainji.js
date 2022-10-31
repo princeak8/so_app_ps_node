@@ -62,12 +62,10 @@ export const kainji = (wss, client) => {
                 console.log(err);
             }
         })
-        setInterval(function(){
-            const val = preparedData();
-            client.publish(topic, JSON.stringify(val));
-            
-            
-        }, 30000);
+        // setInterval(function(){
+        //     const val = preparedData();
+        //     client.publish(topic, JSON.stringify(val)); 
+        // }, 30000);
     })
 
     client.on('error', function (error) {
@@ -76,6 +74,7 @@ export const kainji = (wss, client) => {
 
     client.on('message', async function (sentTopic, message) {
         //console.log('message from mqtt: ', message.toString());
+        // if(sentTopic=='kainjits/tv') console.log(message.toString())
         wss.clients.forEach((wsClient) => {
             //console.log('client ready');
             if (wsClient.readyState === WebSocket.OPEN && sentTopic == topic) {
@@ -101,3 +100,30 @@ const sanitizeData = (message, topic) => {
     // }
     return message;
 }
+
+/*
+Sample Data
+{
+    "id":"kainjiTs",
+    "t":"15:2:50", 
+    "lines":[
+        {
+            "id":"k1j",
+            "td":{"mw":88.11,"A":153.80,"V":333.65,"mvar":-8.57}
+        },
+        {
+            "id":"k2j",
+            "td":{"mw":89.08,"A":154.27,"V":335.29,"mvar":-6.75}
+        },
+        {
+            "id":"k3r",
+            "td":{"mw":190.11,"A":341.43,"V":335.05,"mvar":-55.45}
+        },
+        {
+            "id":"k1f",
+            "td":{"mw":13.87,"A":25.38,"V":330.10,"mvar": 4.40}
+        }
+    ]
+}
+
+*/
