@@ -45,24 +45,6 @@ const ncData = () => {
 const lastData = '';
 
 export const omoku = (wss, client) => {
-    client.on('connect', function () {
-        //subscribe to topic
-
-        client.subscribe(topic, function (err) {
-            if (err) {
-                console.log(err);
-            }
-        })
-        // setInterval(function(){
-        //     const val = preparedData();
-        //     client.publish(topic, JSON.stringify(val));
-        // }, 30000);
-    })
-
-    client.on('error', function (error) {
-        console.log("failed to connect: "+error);
-    })
-
     var topics = [];
     client.on('message', async function (sentTopic, message) {
         if(!topics.includes(sentTopic)) topics.push(sentTopic);
@@ -94,3 +76,17 @@ const sanitizeData = (message, topic) => {
     // }
     return message;
 }
+
+/*
+Sample Data
+{
+    "id":"omokuPs1",
+    "t":"12:21:43", 
+    "lines":[
+        {
+            "id":"o1r",
+            "td":{"mw":42.48,"A":197.08,"V":126.97,"mvar": 8.50}
+        }
+    ]
+}
+*/

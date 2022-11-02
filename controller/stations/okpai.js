@@ -1,8 +1,8 @@
 var WebSocket = require('ws');
 const { powerData, generateValues } = require('../../utilities');
 
-const topic = 'okpaiippGs/tv';
-const status = 'okpaiippGs/status';
+const topic = 'OkpaiippGs/tv';
+const status = 'OkpaiippGs/status';
 
 const preparedData = () => {
     return {
@@ -34,31 +34,13 @@ const ncData = () => {
 const lastData = '';
 
 export const okpai = (wss, client) => {
-    client.on('connect', function () {
-        //subscribe to topic
-
-        client.subscribe(topic, function (err) {
-            if (err) {
-                console.log(err);
-            }
-        })
-        // setInterval(function(){
-        //     const val = preparedData();
-        //     client.publish(topic, JSON.stringify(val));
-        // }, 30000);
-    })
-
-    client.on('error', function (error) {
-        console.log("failed to connect: "+error);
-    })
-
     var topics = [];
     client.on('message', async function (sentTopic, message) {
         if(!topics.includes(sentTopic)) topics.push(sentTopic);
         // console.log(topics);
 
         //console.log('message from mqtt: ', message.toString());
-        // if(sentTopic=='okpaiippGs/tv') console.log(message.toString())
+        if(sentTopic=='OkpaiippGs/tv') console.log(message.toString())
         wss.clients.forEach((wsClient) => {
             //console.log('client ready');
             if (wsClient.readyState === WebSocket.OPEN && sentTopic == topic) {
@@ -84,3 +66,22 @@ const sanitizeData = (message, topic) => {
     // }
     return message;
 }
+
+/*
+Sample Data 
+{
+    "id":"okpaiGs",
+    "t":"12:19:42", 
+    "lines":[
+        {
+            "id":"k1t",
+            "td":{"mw":157.48,"A":280.73,"V":334.14,"mvar":-39.55}
+        },
+        {
+            "id":"k2t",
+            "td":{"mw":157.28,"A":279.79,"V":334.68,"mvar":-40.20}
+        }
+    ]
+}
+
+*/

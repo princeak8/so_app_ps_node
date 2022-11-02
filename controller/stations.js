@@ -14,7 +14,7 @@ const send = (wss, client) => {
     alaoji(wss, client);
     dadinKowa(wss, client);
     gbarain(wss, client);
-    okpai(wss, client);
+    // okpai(wss, client);
     parasEnergy(wss, client);
     eket(wss, client);
     ekim(wss, client);

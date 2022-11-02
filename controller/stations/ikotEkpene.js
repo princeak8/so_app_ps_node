@@ -14,20 +14,6 @@ const ncData = () => {
 const lastData = ''; 
 
 export const ikotEkpene = (wss, client) => {
-    client.on('connect', function () {
-        //subscribe to topic
-
-        client.subscribe(topic, function (err) {
-            if (err) {
-                console.log(err);
-            }
-        })
-    })
-
-    client.on('error', function (error) {
-        console.log("failed to connect: "+error);
-    })
-
     client.on('message', async function (sentTopic, message) {
         //console.log('message from mqtt: ', message.toString());
         wss.clients.forEach((wsClient) => {

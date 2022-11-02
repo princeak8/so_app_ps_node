@@ -80,6 +80,12 @@ const host = process.env.MQTT_HOST;//"mqtt://102.89.11.82";
 const host2 = process.env.MQTT_AWS_HOST;//"mqtt://ec2-3-88-196-213.compute-1.amazonaws.com";
 var client  = mqtt.connect(host, options);
 var client2  = mqtt.connect(host2, options2);
+
+import topics from './topics';
+import mqttConnect from './mqttConnect';
+
+mqttConnect(client, topics.ncc);
+mqttConnect(client2, topics.aws);
 // let formData =  {token: '123'};
 // const url = "http://localhost:3001/get_client";
 // axios.post(url, formData)
@@ -93,6 +99,19 @@ var client2  = mqtt.connect(host2, options2);
 
 StationsController(wss, client);
 Stations2Controller(wss, client2);
+
+// client2.on('connect', function () {
+//     // console.log('connected');
+//     client2.subscribe('OkpaiippGs/tv', function (err) {
+//         if (err) {
+//             console.log(err);
+//         }
+//     })
+// });
+// client2.on('message', async function (sentTopic, message) {
+//     console.log(sentTopic);
+//     // console.log(message.toString());
+// })
 //StationsController(wss, host, options);
 
 // setInterval(function(){

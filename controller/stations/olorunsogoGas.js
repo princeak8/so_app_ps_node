@@ -54,26 +54,6 @@ const ncData = () => {
 const lastData = '';
 
 export const olorunsogoGas = (wss, client) => {
-    client.on('connect', function () {
-        //subscribe to topic
-
-        client.subscribe(topic, function (err) {
-            if (err) {
-                console.log(err);
-            }
-        })
-        setInterval(function(){
-            const val = preparedData();
-            client.publish(topic, JSON.stringify(val));
-            
-            
-        }, 30000);
-    })
-
-    client.on('error', function (error) {
-        console.log("failed to connect: "+error);
-    })
-
     client.on('message', async function (sentTopic, message) {
         //console.log('message from mqtt: ', message.toString());
         // if(sentTopic=='olorunsogo2ts/tv') console.log(message.toString())

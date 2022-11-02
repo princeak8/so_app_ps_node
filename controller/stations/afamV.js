@@ -31,24 +31,6 @@ const ncData = () => {
 const lastData = ''; 
 
 export const afamV = (wss, client) => {
-    client.on('connect', function () {
-        //console.log('connected to mqtt afamIv_v');
-
-        client.subscribe(topic, function (err) {
-            if (err) {
-                console.log(err);
-            }
-        })
-        // setInterval(function(){
-        //     const val = preparedData();
-        //     client.publish(topic, JSON.stringify(val));
-        // }, 30000);
-    })
-
-    client.on('error', function (error) {
-        console.log("failed to connect Afam V: "+error);
-    })
-
     client.on('message', async function (sentTopic, message) {
         //console.log('message from mqtt: ', sentTopic+' '+topic);
         // if(sentTopic=='afam5gs/pv') console.log(message.toString());

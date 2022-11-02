@@ -36,24 +36,6 @@ const lastData = '';
 // export const afamIv_v = (wss, host, options) => {
 //     var client  = mqtt.connect(host, options);
 export const afamIv = (wss, client) => {
-    client.on('connect', function () {
-        //console.log('connected to mqtt afamIv_v');
-
-        client.subscribe(topic, function (err) {
-            if (err) {
-                console.log(err);
-            }
-        })
-        // setInterval(function(){
-        //     const val = preparedData();
-        //     client.publish(topic, JSON.stringify(val));
-        // }, 30000);
-    })
-
-    client.on('error', function (error) {
-        console.log("failed to connect Odukpani: "+error);
-    })
-
     var topics = [];
     client.on('message', async function (sentTopic, message) {
         if(!topics.includes(sentTopic)) topics.push(sentTopic);
