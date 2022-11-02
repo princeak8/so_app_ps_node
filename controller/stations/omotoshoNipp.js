@@ -78,7 +78,7 @@ export const omotoshoNipp = (wss, client) => {
                 })
                 const vals = JSON.stringify(data);
                 //const vals = message.toString();
-                console.log(vals);
+                // console.log(vals);
                 wsClient.send(vals);
             }
         });

@@ -36,7 +36,7 @@ export const omotoshoGas2 = (wss, client) => {
                 message = sanitizeData(message, sentTopic);
                 //wsData = [data];
                 const vals = message.toString();
-                console.log(vals);
+                // console.log(vals);
                 wsClient.send(vals);
             }
         });
