@@ -48,8 +48,6 @@ export const omotoshoNipp = (wss, client) => {
         // setInterval(function(){
         //     const val = preparedData();
         //     client.publish(topic, JSON.stringify(val));
-            
-            
         // }, 30000);
     })
 
@@ -80,7 +78,7 @@ export const omotoshoNipp = (wss, client) => {
                 })
                 const vals = JSON.stringify(data);
                 //const vals = message.toString();
-                //console.log(vals);
+                console.log(vals);
                 wsClient.send(vals);
             }
         });
@@ -89,6 +87,8 @@ export const omotoshoNipp = (wss, client) => {
 
 /*
 Sample Data
+{"id":"omotoshoNippPs","t":"9:45:48", "units":[{"id":"tr1","gd":{"mw":-93.97,"A":165.05,"V":334.16,"mvar":-17.18}},{"id":"tr2","gd":{"mw": 0.00,"A": 0.00,"V": 0.00,"mvar": 0.00}},{"id":"tr3","gd":{"mw": 0.00,"A": 0.00,"V":334.01,"mvar": 0.00}},{"id":"tr4","gd":{"mw":-95.84,"A":168.27,"V":334.14,"mvar":-17.04}}]
+}
 {
     "id":"omotoshoNippPs",
     "t":"13:57:14", 
