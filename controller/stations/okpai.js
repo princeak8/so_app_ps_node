@@ -40,7 +40,7 @@ export const okpai = (wss, client) => {
         // console.log(topics);
 
         //console.log('message from mqtt: ', message.toString());
-        if(sentTopic=='OkpaiippGs/tv') console.log(message.toString())
+        // if(sentTopic=='OkpaiippGs/tv') console.log(message.toString())
         wss.clients.forEach((wsClient) => {
             //console.log('client ready');
             if (wsClient.readyState === WebSocket.OPEN && sentTopic == topic) {
