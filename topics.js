@@ -12,7 +12,8 @@ const topics = {
                 // 'OkpaiippGs/tv', 'OkpaiippGs/status',
                 'parasenergyPs/pv',
                 'eketts/tv', 'eketts/status',
-                'ekimts/tv', 'ekimts/status'
+                'ekimts/tv', 'ekimts/status',
+                'transamadi/tv'
             ],
     aws :   [
                 'afam4gs/pv',
@@ -31,7 +32,7 @@ const topics = {
                 'phmains/tv', 'phmains/status',
                 'riversIppPs/pr', 'riversIppPs/status',
                 'sapelets/pv', 'sapelets/status',
-                'shirorogs/pv'
+                'shirorogs/pv', 'transamadi/tv'
     ]
 };
 

@@ -1,74 +1,74 @@
-var WebSocket = require('ws');
-var mqtt = require('mqtt');
-const { powerData, generateValues } = require('../../utilities');
+var WebSocket = require("ws");
+var mqtt = require("mqtt");
+const { powerData, generateValues } = require("../../utilities");
 
-const topic = 'afam4gs/pv';
+const topic = "afam4gs/pv";
 
 const preparedData = () => {
-    return {
-        "id": "afamIv_vPs",
-        "units": [
-            {
-                "id": "gt17",
-                "pd": powerData(generateValues())
-            },
-            {
-                "id": "gt18",
-                "pd": powerData(generateValues())
-            },
-            {
-                "id": "gt19",
-                "pd": powerData(generateValues())
-            }
-        ]
-    }
+  return {
+    id: "afamIv_vPs",
+    units: [
+      {
+        id: "gt17",
+        pd: powerData(generateValues()),
+      },
+      {
+        id: "gt18",
+        pd: powerData(generateValues()),
+      },
+      {
+        id: "gt19",
+        pd: powerData(generateValues()),
+      },
+    ],
+  };
 };
 
 const ncData = () => {
-    return {
-        id: "afamIv_vPs",
-        "nc": true,
-    }
-}
+  return {
+    id: "afamIv_vPs",
+    nc: true,
+  };
+};
 
-const lastData = ''; 
+const lastData = "";
 
 // export const afamIv_v = (wss, host, options) => {
 //     var client  = mqtt.connect(host, options);
 export const afamIv = (wss, client) => {
-    var topics = [];
-    client.on('message', async function (sentTopic, message) {
-        if(!topics.includes(sentTopic)) topics.push(sentTopic);
-        // console.log(topics);
-        // if(sentTopic=='afam4gs/pv') console.log(message.toString());
-        // console.log('message from mqtt: ', sentTopic+' '+topic);
-        wss.clients.forEach((wsClient) => {
-            //console.log('client ready');
-            
-            if (wsClient.readyState === WebSocket.OPEN && sentTopic == topic) {
-                message = sanitizeData(message, sentTopic);
-                //console.log('Afam IV message sent out: ', sentTopic);
-                const vals = message.toString();
-                // console.log('sent data', vals)
-                wsClient.send(vals);
-            }
-        });
-    })
+  var topics = [];
+  client.on("message", async function (sentTopic, message) {
+    if (!topics.includes(sentTopic)) topics.push(sentTopic);
+    // console.log(topics);
+    // if(sentTopic=='afam4gs/pv') console.log(message.toString());
+    // console.log('message from mqtt: ', sentTopic+' '+topic);
+    wss.clients.forEach((wsClient) => {
+      //console.log('client ready');
+
+      if (wsClient.readyState === WebSocket.OPEN && sentTopic == topic) {
+        message = sanitizeData(message, sentTopic);
+        //console.log('Afam IV message sent out: ', sentTopic);
+        const vals = message.toString();
+        // console.log('sent data', vals)
+        wsClient.send(vals);
+      }
+    });
+  });
 };
 
 const sanitizeData = (message, topic) => {
-    // if(topic == ncTopic) {
-    //     if(lastData == '') {
-    //         message = ncData;
-    //     }else{
-    //         lastData["nc"] = true;
-    //         message = lastData;
-    //     }
-    // }else{
-    //     lastData = message;
-    // }
-    return message;
-}
+  // if(topic == ncTopic) {
+  //     if(lastData == '') {
+  //         message = ncData;
+  //     }else{
+  //         lastData["nc"] = true;
+  //         message = lastData;
+  //     }
+  // }else{
+  //     lastData = message;
+  // }
+  return message;
+};
 
 /*
 Sample Response

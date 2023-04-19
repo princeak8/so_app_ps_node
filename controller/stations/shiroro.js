@@ -1,71 +1,71 @@
-var WebSocket = require('ws');
-const { powerData, generateValues } = require('../../utilities');
+var WebSocket = require("ws");
+const { powerData, generateValues } = require("../../utilities");
 
-const topic = 'shirorogs/pv';
+const topic = "shirorogs/pv";
 
 const preparedData = () => {
-    return {
-        "id": "shiroroPs",
-        "units": [
-            {
-                "id": "411g1",
-                "pd": powerData(generateValues())
-            },
-            {
-                "id": "411g2",
-                "pd": powerData(generateValues())
-            },
-            {
-                "id": "411g3",
-                "pd": powerData(generateValues())
-            },
-            {
-                "id": "411g4",
-                "pd": powerData(generateValues())
-            }
-        ]
-    }
+  return {
+    id: "shiroroPs",
+    units: [
+      {
+        id: "411g1",
+        pd: powerData(generateValues()),
+      },
+      {
+        id: "411g2",
+        pd: powerData(generateValues()),
+      },
+      {
+        id: "411g3",
+        pd: powerData(generateValues()),
+      },
+      {
+        id: "411g4",
+        pd: powerData(generateValues()),
+      },
+    ],
+  };
 };
 
 const ncData = () => {
-    return {
-        id: "shiroroPs",
-        "nc": true,
-    }
-}
+  return {
+    id: "shiroroPs",
+    nc: true,
+  };
+};
 
-const lastData = '';
+const lastData = "";
 
 export const shiroro = (wss, client) => {
-
-    client.on('message', async function (sentTopic, message) {
-        //console.log('message from mqtt: ', message.toString());
-        // if(sentTopic=='shirorogs/pv') console.log(message.toString())
-        wss.clients.forEach((wsClient) => {
-            //console.log('client ready');
-            if (wsClient.readyState === WebSocket.OPEN && sentTopic == topic) {
-                message = sanitizeData(message, sentTopic);
-                //wsData = [data];
-                const vals = message.toString();
-                wsClient.send(vals);
-            }
-        });
-    })
+  client.on("message", async function (sentTopic, message) {
+    //console.log('message from mqtt: ', message.toString());
+    // if (sentTopic == "shirorogs/pv") console.log(message.toString());
+    wss.clients.forEach((wsClient) => {
+      //console.log('client ready');
+      if (wsClient.readyState === WebSocket.OPEN && sentTopic == topic) {
+        message = sanitizeData(message, sentTopic);
+        //wsData = [data];
+        const vals = message.toString();
+        // console.log(vals);
+        wsClient.send(vals);
+      }
+    });
+  });
 };
 
 const sanitizeData = (message, topic) => {
-    // if(topic == ncTopic) {
-    //     if(lastData == '') {
-    //         message = ncData;
-    //     }else{
-    //         lastData["nc"] = true;
-    //         message = lastData;
-    //     }
-    // }else{
-    //     lastData = message;
-    // }
-    return message;
-}
+  // if(topic == ncTopic) {
+  //     if(lastData == '') {
+  //         message = ncData;
+  //     }else{
+  //         lastData["nc"] = true;
+  //         message = lastData;
+  //     }
+  // }else{
+  //     lastData = message;
+  // }
+  return message;
+};
 
 /*
 Sample Data

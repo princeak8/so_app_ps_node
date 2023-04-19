@@ -1,3 +1,5 @@
+var WebSocket = require('ws');
+
 export const randomNumber = (min, max) => {
     return Math.random() * (max - min) + min;
 }
@@ -15,3 +17,15 @@ export const powerData = (vals) => {
         mvar: mvar
     }
 };
+
+export const sendMessage = (wss, message) => {
+    
+    wss.clients.forEach((wsClient) => {
+        // console.log('client ready');
+        if (wsClient.readyState === WebSocket.OPEN) {
+            const vals = message.toString();
+            // console.log(vals);
+            wsClient.send(vals);
+        }
+    });
+}

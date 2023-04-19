@@ -7,6 +7,8 @@ const mqtt = (client, topics) => {
                 client.subscribe(topic, function (err) {
                     if (err) {
                         console.log(topic+': '+err);
+                    }else{
+                        // console.log(topic+': Connected');
                     }
                 })
             })
