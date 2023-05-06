@@ -32,7 +32,8 @@ const topics = {
                 'phmains/tv', 'phmains/status',
                 'riversIppPs/pr', 'riversIppPs/status',
                 'sapelets/pv', 'sapelets/status',
-                'shirorogs/pv', 'transamadi/tv'
+                'shirorogs/pv', 'transamadi/tv',
+                'zungeru/tv', 'zungeru/status'
     ]
 };
 
