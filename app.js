@@ -38,7 +38,7 @@ server.on("upgrade", async function upgrade(request, socket, head) {
   //let query = url.parse(request.url, true).query;
   const token = queryString.parse(request.url)["/token"];
   let authenticated = await ConnectionsController.socketToken(token);
-  console.log("checking authentication", authenticated);
+//   console.log("checking authentication", authenticated);
   if (authenticated) {
     let args;
     wss.handleUpgrade(request, socket, head, function done(ws) {
@@ -52,13 +52,13 @@ server.on("upgrade", async function upgrade(request, socket, head) {
   }
 });
 
-wss.on("connection", (ws) => {
-  console.log("connected to ws");
-  ws.send("Welcome to the chat, enjoy :)");
-});
+// wss.on("connection", (ws) => {
+//   console.log("connected to ws");
+// //   ws.send("Welcome to the chat, enjoy :)");
+// });
 
 const options = {
-  clientId: "mqttjs02",
+  clientId: process.env.NCC_CLIENT_ID,
   // username:"akalo",
   // password:"akalo88",
   username: process.env.MQTT_USER,
@@ -67,7 +67,7 @@ const options = {
 };
 
 const options2 = {
-  clientId: "mqttjs01",
+  clientId: process.env.AWS_CLIENT_ID,
   username: process.env.MQTT_AWS_USER,
   password: process.env.MQTT_AWS_PASS,
   clean: true,
@@ -79,11 +79,12 @@ const host2 = process.env.MQTT_AWS_HOST; //"mqtt://ec2-3-88-196-213.compute-1.am
 var client = mqtt.connect(host, options);
 var client2 = mqtt.connect(host2, options2);
 
+
 import topics from "./topics";
 import mqttConnect from "./mqttConnect";
 
-mqttConnect(client, topics.ncc);
-mqttConnect(client2, topics.aws);
+mqttConnect(client, topics);
+mqttConnect(client2, topics);
 // let formData =  {token: '123'};
 // const url = "http://localhost:3001/get_client";
 // axios.post(url, formData)

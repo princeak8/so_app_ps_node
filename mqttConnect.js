@@ -1,7 +1,11 @@
 
 const mqtt = (client, topics) => {
     const connectedStations = [];
+    let connectedCount = 0;
+    console.log("is connected:", client.connected)
     client.on('connect', function () {
+        connectedCount++;
+        console.log('connected count:', connectedCount);
         // console.log('connected');
         if(topics.length > 0) {
             topics.forEach((topic) => {
@@ -18,6 +22,9 @@ const mqtt = (client, topics) => {
         }
         
     });
+    client.on('connectionLost', function() {
+        console.log("connection lost");
+    })
     client.on('error', function (error) {
         console.log("failed to connect: "+error);
     })

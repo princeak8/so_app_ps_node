@@ -9,8 +9,10 @@ import { sendMessage } from '../utilities';
 const send = (wss, client) => {
     const topics = [];
     client.on('message', async function (sentTopic, message) {
-        if(!topics.includes(sentTopic)) topics.push(sentTopic);
-        console.log(topics);
+        if(!topics.includes(sentTopic)) {
+            topics.push(sentTopic);
+            // console.log("ncc topics", topics);
+        }
         // geregu(wss, client);
         // omotoshoNipp(wss, client);
         // omotoshoGas1(wss, client);

@@ -18,13 +18,14 @@ export const powerData = (vals) => {
     }
 };
 
-export const sendMessage = (wss, message) => {
+export const sendMessage = (wss, message, topic='') => {
     
     wss.clients.forEach((wsClient) => {
         // console.log('client ready');
         if (wsClient.readyState === WebSocket.OPEN) {
             const vals = message.toString();
             // console.log(vals);
+            // if(topic=='phmains/tv') console.log(vals);
             wsClient.send(vals);
         }
     });

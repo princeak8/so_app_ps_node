@@ -6,8 +6,10 @@ import { sendMessage } from '../utilities';
 const send = (wss, client) => {
     const topics = [];
     client.on('message', async function (sentTopic, message) {
-        if(!topics.includes(sentTopic)) topics.push(sentTopic);
-        console.log(topics);
+        if(!topics.includes(sentTopic)) {
+            topics.push(sentTopic);
+            // console.log("aws topics", topics);
+        }
         // afamIv(wss, client);
         // afamV(wss, client);
         // afamVi(wss, client);
@@ -32,7 +34,7 @@ const send = (wss, client) => {
 
         // parasEnergy(wss, client);
 
-        sendMessage(wss, message);
+        sendMessage(wss, message, sentTopic);
     });
 }
 
