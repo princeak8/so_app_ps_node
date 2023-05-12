@@ -74,7 +74,8 @@ const aws = [
     'sapelets/pv', 'sapelets/status',
     'shirorogs/pv', 'transamadi/tv',
     'gbaraints/pv', 'gbaraints/status',
-    'zungeru/tv', 'zungeru/status'
+    'zungeru/tv', 'zungeru/status',
+    'taopex/tv', 'taopex/tv'
 ];
 
 const topics = [...ncc, ...aws];

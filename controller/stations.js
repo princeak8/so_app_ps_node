@@ -28,7 +28,7 @@ const send = (wss, client) => {
         // ekim(wss, client);
 
 
-        sendMessage(wss, message);
+        sendMessage(wss, message, sentTopic);
 
 
         // okpai(wss, client);
