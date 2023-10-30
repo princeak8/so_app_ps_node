@@ -48,7 +48,8 @@ export const afamIv = (wss, client) => {
       if (wsClient.readyState === WebSocket.OPEN && sentTopic == topic) {
         message = sanitizeData(message, sentTopic);
         //console.log('Afam IV message sent out: ', sentTopic);
-        const vals = message.toString();
+        const vals = preparedData();
+        // const vals = message.toString();
         // console.log('sent data', vals)
         wsClient.send(vals);
       }

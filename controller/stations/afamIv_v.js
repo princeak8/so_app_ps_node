@@ -44,8 +44,8 @@ export const afamIv_v = (wss, client) => {
                 message = sanitizeData(message, sentTopic);
                 //console.log('Odukpani message sent out: ', sentTopic);
                 //wsData = [data];
-                //const vals = preparedData();
-                const vals = message.toString();
+                const vals = preparedData();
+                // const vals = message.toString();
                 //console.log('sent data', vals)
                 wsClient.send(vals);
             }

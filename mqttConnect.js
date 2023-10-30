@@ -5,7 +5,7 @@ const mqtt = (client, topics) => {
     console.log("is connected:", client.connected)
     client.on('connect', function () {
         connectedCount++;
-        console.log('connected count:', connectedCount);
+        // console.log('connected count:', connectedCount);
         // console.log('connected');
         if(topics.length > 0) {
             topics.forEach((topic) => {
