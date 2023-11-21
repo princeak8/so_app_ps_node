@@ -175,6 +175,32 @@ const sapeleConversion = (vals) => {
     }
 }
 
+const odukpaniConversion = (vals) => {
+    try{
+        let odukpani = JSON.parse(vals);
+        let linesIds = ['d1b', 'd2b'];
+        let units = [];
+        let keys = [];
+        let conversionDone = false;
+        if(odukpani.units && odukpani.units.length > 0) {
+            conversionDone = true;
+            odukpani.units.forEach((unit, i) => {
+                if(!linesIds.includes(unit.id)) {
+                    units.push(unit);
+                }
+            })
+            odukpani.units = units;
+        }
+        if(conversionDone) {
+            let odukpaniBuffer = Buffer.from(JSON.stringify(odukpani));
+            return [odukpaniBuffer.toString()];
+        }
+        return [];
+    } catch(e) {
+        return [];
+    }
+}
+
 const nc = {
     id : "shiroroPs",
     nc : true
@@ -186,7 +212,7 @@ export const sendMessage = (wss, message, topic='') => {
         // console.log('client ready');
         if (wsClient.readyState === WebSocket.OPEN) {
             let vals = message.toString();
-            // if(topic == 'gereguNipp/pv') console.log(vals);
+            // if(topic == 'odukpanits/pv') console.log(vals);
             // if(topic == 'shirorogs/pv') vals = Buffer.from(JSON.stringify(nc)).toString();
             send(vals, topic, wsClient);
         }
@@ -209,6 +235,9 @@ const send = (msg, topic, wsClient) => {
             case 'sapelets/pv' :
                 let sapeleArr = sapeleConversion(msg);
                 if(sapeleArr.length > 0) sapeleArr.forEach((vals) => wsClient.send(vals)); break;
+            case 'odukpanits/pv' :
+                let odukpaniArr = odukpaniConversion(msg);
+                if(odukpaniArr.length > 0) odukpaniArr.forEach((vals) => wsClient.send(vals)); break;
             default:
                 wsClient.send(msg);
         }
