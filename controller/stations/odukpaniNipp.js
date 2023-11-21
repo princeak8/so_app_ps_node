@@ -56,7 +56,8 @@ export const odukpaniNipp = (wss, client) => {
                 message = sanitizeData(message, sentTopic);
                 //wsData = [data];
                 const vals = message.toString();
-                wsClient.send(vals);
+                
+                (sentTopic=='odukpanits/pv') ? wsClient.send(vals) : wsClient.send(vals);
             }
         });
     })

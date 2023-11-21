@@ -1,3 +1,5 @@
+import ncStation from "./ncStation";
+
 var WebSocket = require('ws');
 
 export const randomNumber = (min, max) => {
@@ -173,33 +175,68 @@ const sapeleConversion = (vals) => {
     }
 }
 
+const nc = {
+    id : "shiroroPs",
+    nc : true
+}
+
 export const sendMessage = (wss, message, topic='') => {
     
     wss.clients.forEach((wsClient) => {
         // console.log('client ready');
         if (wsClient.readyState === WebSocket.OPEN) {
             let vals = message.toString();
-            // if(topic == 'sapelets/pv') console.log(vals);
+            // if(topic == 'gereguNipp/pv') console.log(vals);
+            // if(topic == 'shirorogs/pv') vals = Buffer.from(JSON.stringify(nc)).toString();
             send(vals, topic, wsClient);
         }
     });
 }
 
 const send = (msg, topic, wsClient) => {
-    switch(topic) {
-        case 'ihovborts/tv' :
-            let ihovborArr = ihovborConversion(msg);
-            if(ihovborArr.length > 0) ihovborArr.forEach((vals) => wsClient.send(vals)); break;
-        case 'gereguGs/pv' :
-            let gereguArr = gereguConversion(msg);
-            if(gereguArr.length > 0) gereguArr.forEach((vals) => wsClient.send(vals)); break; 
-        case 'olorunsogo2ts/tv' :
-            let olorunsogoArr = olorunsogoConversion(msg);
-            if(olorunsogoArr.length > 0) olorunsogoArr.forEach((vals) => wsClient.send(vals)); break;
-        case 'sapelets/pv' :
-            let sapeleArr = sapeleConversion(msg);
-            if(sapeleArr.length > 0) sapeleArr.forEach((vals) => wsClient.send(vals)); break;
-        default:
-            wsClient.send(msg);
+    // if(topic == 'shirorogs/pv') console.log(msg);
+    if(!topic.toLowerCase().includes('/status')) {
+        switch(topic) {
+            case 'ihovborts/tv' :
+                let ihovborArr = ihovborConversion(msg);
+                if(ihovborArr.length > 0) ihovborArr.forEach((vals) => wsClient.send(vals)); break;
+            case 'gereguGs/pv' :
+                let gereguArr = gereguConversion(msg);
+                if(gereguArr.length > 0) gereguArr.forEach((vals) => wsClient.send(vals)); break; 
+            case 'olorunsogo2ts/tv' :
+                let olorunsogoArr = olorunsogoConversion(msg);
+                if(olorunsogoArr.length > 0) olorunsogoArr.forEach((vals) => wsClient.send(vals)); break;
+            case 'sapelets/pv' :
+                let sapeleArr = sapeleConversion(msg);
+                if(sapeleArr.length > 0) sapeleArr.forEach((vals) => wsClient.send(vals)); break;
+            default:
+                wsClient.send(msg);
+        }
+    }else{
+        let msgs = prepareNC(topic, msg);
+        if(msgs.length > 0) msgs.forEach((msg) => wsClient.send(msg));
     }
+}
+
+const prepareNC = (topic, msg) => {
+    let vals = [];
+    if(msg == 'nc') {
+        let ncId = ncStation.getId(topic);
+        if(ncId != '') {
+            if(Array.isArray(ncId)){
+                ncId.forEach((id) => vals.push(generateNcData(id)));
+            }else{
+                vals.push(generateNcData(ncId));
+            }
+        }
+    }
+    return vals;
+}
+
+const generateNcData = (id) => {
+    let data = {
+        id: id,
+        nc: true
+    };
+    return Buffer.from(JSON.stringify(data)).toString()
 }
