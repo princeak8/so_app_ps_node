@@ -3,9 +3,9 @@ const router = express.Router();
 const checkAuth = require('../middleware/check-auth');
 
 const UsersController = require('../controller/users');
-const SettingsController = require('../controller/settings');
+// const SettingsController = require('../controller/settings');
 
-router.get('/settings', SettingsController.all);
+// router.get('/settings', SettingsController.all);
 
 router.post('/register', UsersController.register);
 
